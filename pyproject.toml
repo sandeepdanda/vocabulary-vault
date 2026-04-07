@@ -24,3 +24,6 @@ vault = "vocabulary_vault.cli:vault"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+vocabulary_vault = ["data/*.json"]

@@ -191,12 +191,9 @@ def list_books(conn: sqlite3.Connection) -> list[dict]:
             b.name,
             b.folder_name,
             b.date_created,
-            COUNT(DISTINCT c.id) AS chapter_count,
-            COUNT(w.id) AS word_count
+            (SELECT COUNT(*) FROM chapters WHERE book_id = b.id) AS chapter_count,
+            (SELECT COUNT(*) FROM word_entries WHERE book_id = b.id) AS word_count
         FROM books b
-        LEFT JOIN chapters c ON c.book_id = b.id
-        LEFT JOIN word_entries w ON w.book_id = b.id
-        GROUP BY b.id
         ORDER BY b.name
         """
     ).fetchall()
