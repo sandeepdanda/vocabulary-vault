@@ -2,10 +2,9 @@
 
 # 📚⚔️ ReadLoot
 
-**A vocabulary RPG that turns reading into a game.**
+### A vocabulary RPG that turns reading into a game.
 
-Collect words from books, review with spaced repetition, earn XP, level up, and unlock achievements.
-Web app + CLI.
+Collect words from books. Review with spaced repetition. Earn XP. Level up. Unlock achievements.
 
 [![CI](https://github.com/sandeepdanda/readloot/actions/workflows/ci.yml/badge.svg)](https://github.com/sandeepdanda/readloot/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -16,9 +15,91 @@ Web app + CLI.
 
 ---
 
-## What it does
+## The Loop
 
-🧠 Spaced repetition (mastery levels 0-5) · ⚔️ XP, streaks, 6 reader levels · 🏆 10 achievements · ✨ Word of the Day · 🔍 Full-text search · 📚 Organized by book and chapter · 🌙 Dark/light theme · 📱 PWA
+```mermaid
+graph LR
+    A["📖 Read a book"] --> B["✍️ Collect words"]
+    B --> C["🧠 Review"]
+    C --> D["⚔️ Earn XP"]
+    D --> E["📈 Level up"]
+    E --> F["🏆 Achievements"]
+    F --> A
+
+    style A fill:#7c3aed,color:#fff,stroke:none
+    style B fill:#7c3aed,color:#fff,stroke:none
+    style C fill:#7c3aed,color:#fff,stroke:none
+    style D fill:#7c3aed,color:#fff,stroke:none
+    style E fill:#7c3aed,color:#fff,stroke:none
+    style F fill:#7c3aed,color:#fff,stroke:none
+```
+
+Words come back at increasing intervals (1, 1, 3, 7, 14, 30 days) as you master them. Every correct answer earns XP, builds streaks, and unlocks achievements.
+
+## Features
+
+| | | |
+|---|---|---|
+| 🧠 **Spaced Repetition** | 6 mastery levels with SM-2 intervals | Words come back when you're about to forget |
+| ⚔️ **XP & Levels** | Novice → Page Turner → Bookworm → Word Smith → Lexicon Lord → Master | +10 XP per word, +5 XP per correct review |
+| 🔥 **Streaks** | Daily activity tracking | Consecutive days keep your streak alive |
+| 🏆 **10 Achievements** | Word milestones, streak goals, perfect reviews | Animated toasts when you unlock them |
+| ✨ **Word of the Day** | Date-seeded, mastery-weighted | Resurfaces words you haven't seen in a while |
+| 📚 **Book Organization** | Words grouped by book and chapter | Browse your vocabulary by source |
+| 🔍 **Full-text Search** | SQLite FTS5 | Search across words, meanings, synonyms, context |
+| 🌙 **Dark/Light/System** | Three theme modes | PWA installable on mobile |
+
+## Architecture
+
+```mermaid
+graph TB
+    subgraph Frontend["Frontend · Next.js 14 + TypeScript"]
+        UI["10 Pages · Tailwind · shadcn/ui"]
+        Gamify["Gamification UI · Framer Motion"]
+        PWA["PWA · Offline Support"]
+    end
+
+    subgraph Backend["Backend · FastAPI"]
+        Auth["JWT Auth · httpOnly Cookies"]
+        API["16 REST Endpoints"]
+    end
+
+    subgraph Core["Service Layer · Python Package"]
+        WS["Word Service"]
+        RE["Review Engine · SM-2"]
+        GS["Gamification · XP, Levels, Streaks"]
+        BS["Book Service"]
+        ACH["Achievements · 10 Milestones"]
+    end
+
+    DB[("SQLite per user\nWAL mode · FTS5")]
+
+    UI & Gamify & PWA -->|"REST + httpOnly JWT"| API
+    API --> Auth
+    API --> WS & RE & GS & BS & ACH
+    WS & RE & GS & BS & ACH --> DB
+
+    style Frontend fill:#1e1b4b,color:#c4b5fd,stroke:#7c3aed
+    style Backend fill:#1e1b4b,color:#c4b5fd,stroke:#7c3aed
+    style Core fill:#1e1b4b,color:#c4b5fd,stroke:#7c3aed
+    style DB fill:#7c3aed,color:#fff,stroke:none
+```
+
+The backend doesn't reimplement business logic - it imports the CLI package and calls service functions directly. Fix something in the service layer and both CLI and web get the fix.
+
+## Gamification
+
+```mermaid
+graph LR
+    L1["Novice\n0 XP"] --> L2["Page Turner\n100 XP"] --> L3["Bookworm\n500 XP"] --> L4["Word Smith\n1,500 XP"] --> L5["Lexicon Lord\n5,000 XP"] --> L6["ReadLoot Master\n15,000 XP"]
+
+    style L1 fill:#6b7280,color:#fff,stroke:none
+    style L2 fill:#3b82f6,color:#fff,stroke:none
+    style L3 fill:#8b5cf6,color:#fff,stroke:none
+    style L4 fill:#a855f7,color:#fff,stroke:none
+    style L5 fill:#d946ef,color:#fff,stroke:none
+    style L6 fill:#f59e0b,color:#fff,stroke:none
+```
 
 ## Quick Start
 
@@ -43,21 +124,12 @@ vault review          # spaced repetition quiz
 vault stats           # XP, level, streak
 ```
 
-## Tech Stack
-
-**Frontend:** Next.js 14, TypeScript, Tailwind, shadcn/ui, TanStack Query, Framer Motion
-**Backend:** FastAPI, JWT auth, per-user SQLite vaults
-**CLI:** Python, Click, Rich
-
 ## What's Next
 
-Auto-vocabulary extraction from books, word rarity tiers, word evolution visuals, FSRS algorithm, boss battles, and more. See [ROADMAP.md](ROADMAP.md).
+Auto-vocabulary extraction from books, word rarity tiers, FSRS algorithm, boss battles, and more. See [ROADMAP.md](ROADMAP.md).
 
-## Docs
-
-- [PROJECT.md](PROJECT.md) - Architecture, API endpoints, database schema, gamification details
-- [ROADMAP.md](ROADMAP.md) - Feature plan with 6 phases
+For full architecture, API docs, schema, and security details: [PROJECT.md](PROJECT.md)
 
 ## License
 
-MIT - Originally written at MIT in 1987. It fits in a tweet: "Do whatever you want with this, just keep the copyright notice, and don't blame me if it breaks." ([Full text](LICENSE))
+MIT ([Full text](LICENSE))
