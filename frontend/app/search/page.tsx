@@ -42,7 +42,7 @@ export default function SearchPage() {
       <div>
         <h1 className="text-3xl font-bold">Search</h1>
         <p className="text-muted-foreground mt-1">
-          Search your vocabulary vault
+          Search your word collection
         </p>
       </div>
 

@@ -37,7 +37,11 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
 
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
-    throw new Error(body.detail || `Request failed: ${res.status}`);
+    const detail = body.detail;
+    if (Array.isArray(detail)) {
+      throw new Error(detail.map((d: { msg: string }) => d.msg).join(", "));
+    }
+    throw new Error(typeof detail === "string" ? detail : `Request failed: ${res.status}`);
   }
 
   return res.json();
