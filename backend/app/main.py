@@ -13,7 +13,7 @@ from app.auth import init_users_db, router as auth_router
 from app.config import settings
 from app.routes import achievements, books, dictionary, review, stats, words, wotd
 
-app = FastAPI(title="Vocabulary Vault API", version="0.1.0")
+app = FastAPI(title="ReadLoot API", version="0.1.0")
 
 # CORS middleware - split comma-separated origins
 origins = [o.strip() for o in settings.ALLOWED_ORIGINS.split(",")]

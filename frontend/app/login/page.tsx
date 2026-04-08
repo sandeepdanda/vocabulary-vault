@@ -47,7 +47,7 @@ export default function LoginPage() {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="text-4xl mb-2">📖</div>
-          <CardTitle className="text-2xl">Vocabulary Vault</CardTitle>
+          <CardTitle className="text-2xl">ReadLoot</CardTitle>
           <CardDescription>
             {isLogin
               ? "Sign in to your vocabulary RPG"

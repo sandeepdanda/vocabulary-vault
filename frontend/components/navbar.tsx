@@ -44,7 +44,7 @@ export function Navbar() {
         <div className="flex items-center gap-2 px-4 py-5 border-b border-border">
           <span className="text-xl">📖</span>
           <span className="font-bold text-lg text-foreground">
-            Vocabulary Vault
+            ReadLoot
           </span>
         </div>
         <nav className="flex-1 px-2 py-4 space-y-1">

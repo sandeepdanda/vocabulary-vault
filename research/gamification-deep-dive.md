@@ -1,11 +1,11 @@
-# Gamification Deep Dive - Vocabulary Vault
+# Gamification Deep Dive - ReadLoot
 
 > Research date: 2026-04-08
-> Goal: Transform Vocabulary Vault from a basic XP/levels app into a genuinely addictive vocabulary RPG
+> Goal: Transform ReadLoot from a basic XP/levels app into a genuinely addictive vocabulary RPG
 
 ## Executive Summary
 
-Vocabulary Vault currently has a solid foundation: XP (10 per word, 5 per review), 6 reader levels, streaks, and 10 achievements. But this is table-stakes gamification - the same stuff every learning app ships on day one.
+ReadLoot currently has a solid foundation: XP (10 per word, 5 per review), 6 reader levels, streaks, and 10 achievements. But this is table-stakes gamification - the same stuff every learning app ships on day one.
 
 This research covers five areas that could make the app genuinely fun and addictive:
 1. **RPG mechanics** - skill trees, boss battles, word dungeons, character classes, word crafting
@@ -444,7 +444,7 @@ Time-limited events create urgency and FOMO (used aggressively by Pokemon Go - l
 - **Micro-lessons (5 min)**: Sessions are short enough to fit anywhere. "Just one more lesson" is easy to say.
 - **Guilt-tripping notifications**: "These reminders don't seem to be working. We'll stop sending them." Brutal but effective.
 
-**What to steal for Vocabulary Vault**:
+**What to steal for ReadLoot**:
 - Streak Freeze mechanic (earn or buy with in-app currency)
 - Weekly leagues with promotion/demotion
 - Variable XP rewards (bonus XP events, lucky word drops)
@@ -458,7 +458,7 @@ Time-limited events create urgency and FOMO (used aggressively by Pokemon Go - l
 - **Statistics depth**: Detailed graphs on retention rates, review timing, card maturity. Data nerds love this.
 - **Community decks**: Shared decks for common topics. Social without being social.
 
-**What to steal for Vocabulary Vault**:
+**What to steal for ReadLoot**:
 - Deep statistics page (retention curves, review heatmaps, word difficulty distribution)
 - FSRS-inspired scheduling (better than basic SM-2)
 - Export/import word lists (community sharing)
@@ -472,7 +472,7 @@ Time-limited events create urgency and FOMO (used aggressively by Pokemon Go - l
 - **Real-world impact**: Virtual coins can plant real trees through a partnership. Purpose beyond the game.
 - **Simplicity**: One core mechanic, executed perfectly.
 
-**What to steal for Vocabulary Vault**:
+**What to steal for ReadLoot**:
 - **Word Garden**: Each word is a plant that grows with mastery (see Section 4.2). Neglected words wilt.
 - **Consequence for neglect**: Words you don't review start to "fade" visually. Their card art degrades. This creates urgency to review.
 - **Real-world connection**: "Your vocabulary helped you read X books this year" - connect learning to tangible outcomes.
@@ -486,7 +486,7 @@ Time-limited events create urgency and FOMO (used aggressively by Pokemon Go - l
 - **Pets and mounts**: Collectible creatures hatched from eggs + potions. Pure collection dopamine.
 - **Gold economy**: Earn gold from tasks, spend on custom rewards (user-defined: "Watch an episode of TV").
 
-**What to steal for Vocabulary Vault**:
+**What to steal for ReadLoot**:
 - **HP system**: Start each day with 5 hearts. Miss a scheduled review? Lose a heart. Lose all hearts? Lose some XP. Creates accountability.
 - **Party quests for guilds**: Guild members' daily reviews contribute to a shared boss fight
 - **Collectible word creatures**: Each word rarity tier hatches a different creature type
@@ -501,7 +501,7 @@ Time-limited events create urgency and FOMO (used aggressively by Pokemon Go - l
 - **Evolution mechanic**: Collecting candy to evolve Pokemon is a grind, but the evolution animation is so satisfying it justifies the effort.
 - **Daily Discovery**: Featured Pokemon scattered across different days, encouraging daily check-ins over binge sessions.
 
-**What to steal for Vocabulary Vault**:
+**What to steal for ReadLoot**:
 - **Word Pokedex**: A visual catalog of all words you've encountered, with completion percentage per book/category
 - **Rarity-based excitement**: Discovering a Legendary word should trigger a special animation and sound
 - **Evolution satisfaction**: Word mastery level-ups need to feel as good as a Pokemon evolution
@@ -558,7 +558,7 @@ Ranked by impact vs effort. Start with high-impact, low-effort features.
 
 ```mermaid
 gantt
-    title Vocabulary Vault Gamification Roadmap
+    title ReadLoot Gamification Roadmap
     dateFormat  YYYY-MM-DD
     section Tier 1 - Quick Wins
     Word rarity tiers           :t1a, 2026-04-15, 2d

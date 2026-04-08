@@ -1,4 +1,4 @@
-# Vocabulary Vault - Roadmap
+# ReadLoot - Roadmap
 
 Prioritized feature plan. Each phase builds on the previous one. Detailed research for each feature is in `research/`.
 

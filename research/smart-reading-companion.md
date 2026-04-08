@@ -2,9 +2,9 @@
 
 ## Executive Summary
 
-This document researches six features that would transform Vocabulary Vault from a vocabulary tracker into an intelligent reading companion. Each section covers the theory, algorithms, data sources, and concrete implementation approach for the existing SQLite + Python + Next.js stack.
+This document researches six features that would transform ReadLoot from a vocabulary tracker into an intelligent reading companion. Each section covers the theory, algorithms, data sources, and concrete implementation approach for the existing SQLite + Python + Next.js stack.
 
-**Current state**: Vocabulary Vault tracks words per book/chapter with mastery levels 0-5, SM-2 spaced repetition (intervals: 1,1,3,7,14,30 days), review history (correct/incorrect per word), XP, streaks. SQLite with FTS5 search. Auto-vocab feature in progress.
+**Current state**: ReadLoot tracks words per book/chapter with mastery levels 0-5, SM-2 spaced repetition (intervals: 1,1,3,7,14,30 days), review history (correct/incorrect per word), XP, streaks. SQLite with FTS5 search. Auto-vocab feature in progress.
 
 **Key findings**:
 - FSRS algorithm (19 parameters, DSR memory model) would replace SM-2 with 20-30% fewer reviews for same retention
@@ -401,7 +401,7 @@ Book C, Ch 1:  ...unlike stone monuments, these ephemeral structures were built 
 2. **Query phase**: Look up the word, retrieve positions, extract surrounding context window
 3. **Display phase**: Align the keyword in the center, show left/right context
 
-### Implementation for Vocabulary Vault
+### Implementation for ReadLoot
 
 The existing `word_entries` table already stores `context` (the sentence where the word was found). This is the simplest concordance - one context per word per chapter.
 
@@ -505,7 +505,7 @@ Beyond raw concordance, derive insights:
 
 ### Current State: SM-2
 
-Vocabulary Vault currently uses a simplified SM-2 with fixed intervals:
+ReadLoot currently uses a simplified SM-2 with fixed intervals:
 
 ```python
 # From review_engine.py
@@ -727,7 +727,7 @@ Lexile doesn't directly map to vocabulary size, but there's correlation:
 
 ### Estimating User Reading Level
 
-Since Vocabulary Vault tracks which words a user knows, we can estimate their level:
+Since ReadLoot tracks which words a user knows, we can estimate their level:
 
 ```python
 def estimate_cefr_level(known_word_count: int) -> dict:

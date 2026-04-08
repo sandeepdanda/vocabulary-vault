@@ -1,6 +1,6 @@
 {
-  "name": "Vocabulary Vault",
-  "short_name": "VocabVault",
+  "name": "ReadLoot",
+  "short_name": "ReadLoot",
   "description": "A vocabulary RPG for readers",
   "start_url": "/",
   "display": "standalone",

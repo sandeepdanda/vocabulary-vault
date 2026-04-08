@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-This document covers the product design, UX, and legal considerations for adding an auto-vocabulary-from-books feature to Vocabulary Vault. The feature would let users select a book and have the system pre-populate vocabulary words, replacing the current manual-only word entry flow.
+This document covers the product design, UX, and legal considerations for adding an auto-vocabulary-from-books feature to ReadLoot. The feature would let users select a book and have the system pre-populate vocabulary words, replacing the current manual-only word entry flow.
 
 The recommended approach is a **hybrid progressive unlock model**: the system pre-generates all vocabulary per chapter at book-add time, but only reveals words from chapters the user marks as "read." This balances convenience with spoiler prevention and fits naturally into the existing XP/achievement system.
 
@@ -183,7 +183,7 @@ flowchart LR
 ### Current System (from codebase)
 
 The existing gamification system has:
-- **XP levels**: Novice (0) -> Page Turner (100) -> Bookworm (500) -> Word Smith (1500) -> Lexicon Lord (5000) -> Vocabulary Vault Master (15000)
+- **XP levels**: Novice (0) -> Page Turner (100) -> Bookworm (500) -> Word Smith (1500) -> Lexicon Lord (5000) -> ReadLoot Master (15000)
 - **Streaks**: Daily activity tracking with current/longest streak
 - **Achievements**: 10 achievements covering word counts, streaks, reviews, books, mastery
 - **XP awards**: Granted for adding words and completing reviews
@@ -272,7 +272,7 @@ flowchart LR
 
 Fair use is evaluated on four factors:
 
-| Factor | Assessment for Vocabulary Vault |
+| Factor | Assessment for ReadLoot |
 |--------|-------------------------------|
 | 1. Purpose and character of use | Educational/transformative - FAVORABLE |
 | 2. Nature of the copyrighted work | Creative/literary works - UNFAVORABLE |

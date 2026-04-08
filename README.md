@@ -1,13 +1,13 @@
 <div align="center">
 
-# 📚⚔️ Vocabulary Vault
+# 📚⚔️ ReadLoot
 
 **A vocabulary RPG that turns reading into a game.**
 
 Collect words from books you read, review them with spaced repetition,
 earn XP, level up, and unlock achievements.
 
-[![CI](https://github.com/sandeepdanda/vocabulary-vault/actions/workflows/ci.yml/badge.svg)](https://github.com/sandeepdanda/vocabulary-vault/actions)
+[![CI](https://github.com/sandeepdanda/readloot/actions/workflows/ci.yml/badge.svg)](https://github.com/sandeepdanda/readloot/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![Next.js 14](https://img.shields.io/badge/Next.js-14-black.svg)](https://nextjs.org/)
@@ -52,8 +52,8 @@ earn XP, level up, and unlock achievements.
 ### Quick Start
 
 ```bash
-git clone https://github.com/sandeepdanda/vocabulary-vault.git
-cd vocabulary-vault
+git clone https://github.com/sandeepdanda/readloot.git
+cd readloot
 
 # Backend
 pip install -e .

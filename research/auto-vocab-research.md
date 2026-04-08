@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-Building an auto-vocabulary system for Vocabulary Vault requires solving five problems: getting book text, identifying hard words, providing spoiler-free context, detecting chapters, and doing it all without reinventing the wheel. This document covers each area with concrete libraries, APIs, and architecture recommendations.
+Building an auto-vocabulary system for ReadLoot requires solving five problems: getting book text, identifying hard words, providing spoiler-free context, detecting chapters, and doing it all without reinventing the wheel. This document covers each area with concrete libraries, APIs, and architecture recommendations.
 
 The recommended stack: `ebooklib` for epub parsing, `wordfreq` + `cefrpy` for difficulty scoring, `spaCy` for NLP pipeline, and `BookNLP` for character/entity detection (used in spoiler filtering). For book content, Project Gutenberg (public domain) is the only fully legal source for full text; copyrighted books require user-supplied epub/pdf files.
 
@@ -150,7 +150,7 @@ level = analyzer.get_average_word_level_CEFR("ephemeral")  # C1 or C2
 level = analyzer.get_average_word_level_CEFR("happy")      # A1
 ```
 
-- **Threshold for Vocabulary Vault**: B2+ words (level >= 4.0 on float scale) are vocabulary-worthy for most readers.
+- **Threshold for ReadLoot**: B2+ words (level >= 4.0 on float scale) are vocabulary-worthy for most readers.
 
 #### Method C: Academic Word Lists
 
@@ -296,7 +296,7 @@ For each vocabulary word:
 - **Storage**: SQLite database (`vocab.db`) on device
 - **Export tools**: `kindle_vocab_anki` (GitHub), Obsidian "Kindle Vocab" plugin, KindleVocabToAnki app
 - **Limitation**: Manual - only captures words the user actively looks up
-- **What Vocabulary Vault can learn**: The sentence-in-context model is proven effective for retention
+- **What ReadLoot can learn**: The sentence-in-context model is proven effective for retention
 
 ### 4.2 LingQ
 
@@ -304,19 +304,19 @@ For each vocabulary word:
 - **Key feature**: Tracks word status (new → recognized → learned → known)
 - **Book support**: Users import epub/text. LingQ splits into "lessons" (pages).
 - **6+ years of daily use reported** by power users for reading books in foreign languages
-- **What Vocabulary Vault can learn**: The progressive word-status model (new → known) and the reading-integrated lookup UX
+- **What ReadLoot can learn**: The progressive word-status model (new → known) and the reading-integrated lookup UX
 
 ### 4.3 ReadLang
 
 - **How it works**: Web-based reader. Click any word for instant translation. Words saved to flashcard deck.
 - **Book support**: Paste text or import web pages
-- **What Vocabulary Vault can learn**: The click-to-save interaction pattern
+- **What ReadLoot can learn**: The click-to-save interaction pattern
 
 ### 4.4 Vocabulary.com
 
 - **How it works**: Curated vocabulary lists, adaptive quizzing, "Vocabulary Jam" competitions
 - **Book lists**: Has pre-made vocabulary lists for popular books (SAT prep, literature)
-- **What Vocabulary Vault can learn**: Gamification (points, levels, streaks) and pre-made book word lists
+- **What ReadLoot can learn**: Gamification (points, levels, streaks) and pre-made book word lists
 
 ### 4.5 BookNLP (Research Tool)
 
@@ -335,9 +335,9 @@ For each vocabulary word:
 - Books with inline translations. Tap word for translation. Vocabulary tracking.
 - Focused on language learners reading in foreign languages.
 
-### 4.8 Gap Analysis - What Vocabulary Vault Adds
+### 4.8 Gap Analysis - What ReadLoot Adds
 
-| Feature | Kindle VB | LingQ | ReadLang | Vocab.com | **Vocabulary Vault** |
+| Feature | Kindle VB | LingQ | ReadLang | Vocab.com | **ReadLoot** |
 |---------|-----------|-------|----------|-----------|---------------------|
 | Auto-extract vocab from book | No | No | No | Curated only | **Yes** |
 | Per-chapter organization | No | By lesson | No | No | **Yes** |

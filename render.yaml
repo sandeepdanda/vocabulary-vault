@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: vocabulary-vault
+    name: readloot
     runtime: python
     buildCommand: |
       pip install -r backend/requirements.txt

@@ -1,8 +1,8 @@
-# Vocabulary Vault: Growth, Monetization & Community Strategy
+# ReadLoot: Growth, Monetization & Community Strategy
 
 ## Executive Summary
 
-Vocabulary Vault sits at the intersection of three proven markets: vocabulary learning (Duolingo, Anki, Quizlet), reading companions (Readwise, Kindle Vocabulary Builder), and book community platforms (Goodreads, StoryGraph). No existing product combines book-centric vocabulary organization, RPG gamification, spoiler-free progressive unlock, and spaced repetition into a single reading companion. This is the core differentiator.
+ReadLoot sits at the intersection of three proven markets: vocabulary learning (Duolingo, Anki, Quizlet), reading companions (Readwise, Kindle Vocabulary Builder), and book community platforms (Goodreads, StoryGraph). No existing product combines book-centric vocabulary organization, RPG gamification, spoiler-free progressive unlock, and spaced repetition into a single reading companion. This is the core differentiator.
 
 The recommended path: start with a generous freemium model to build a community-driven content moat (user-contributed vocabulary lists per book), then layer on premium features and institutional licensing once the content library reaches critical mass.
 
@@ -110,7 +110,7 @@ The recommended path: start with a generous freemium model to build a community-
 ```mermaid
 graph TD
     A[User reads a book] --> B[Encounters unknown words]
-    B --> C[Adds words to Vocabulary Vault]
+    B --> C[Adds words to ReadLoot]
     C --> D[Reviews via spaced repetition]
     D --> E[Earns XP, levels up]
     E --> F[Shares list with community]
@@ -130,8 +130,8 @@ graph TD
 
 **Model: "Official Vocabulary Guides"**
 - Partner with publishers to create curated vocabulary lists for new releases
-- Publisher provides advance copies; Vocabulary Vault creates the guide
-- Revenue share: publisher gets exposure/marketing, Vocabulary Vault gets exclusive content
+- Publisher provides advance copies; ReadLoot creates the guide
+- Revenue share: publisher gets exposure/marketing, ReadLoot gets exclusive content
 - Badge: "Official Vocabulary Guide" on the book's page
 
 **Precedent:**
@@ -139,7 +139,7 @@ graph TD
 - CliffsNotes was acquired by Houghton Mifflin Harcourt (publisher), then Course Hero
 - Both started as independent study aids and became valuable enough for publishers to acquire
 
-**Pitch to publishers:** "We drive deeper engagement with your books. Readers who use Vocabulary Vault spend 40% more time with each book and are more likely to finish it." (Validate this metric once you have data.)
+**Pitch to publishers:** "We drive deeper engagement with your books. Readers who use ReadLoot spend 40% more time with each book and are more likely to finish it." (Validate this metric once you have data.)
 
 ### 3.2 Book Club Partnerships
 
@@ -205,7 +205,7 @@ This is the SparkNotes playbook: create a page for every popular book, rank for 
 | **Twitter/X** | Auto-generated "I learned X words from Y this week" shareable cards | Medium |
 | **Instagram** | Beautiful vocabulary cards with book covers, shareable to Stories | Medium |
 | **Reddit** | Engage in r/books, r/vocabulary, r/languagelearning, r/bookclub | Medium - authentic engagement, not spam |
-| **Discord** | Official Vocabulary Vault Discord for book discussions + vocabulary challenges | High for retention |
+| **Discord** | Official ReadLoot Discord for book discussions + vocabulary challenges | High for retention |
 
 ### 4.3 Product-Led Growth
 
@@ -254,7 +254,7 @@ graph LR
 ```
                     Book-Centric
                         │
-                        │  ★ Vocabulary Vault
+                        │  ★ ReadLoot
                         │
         Kindle VB ●     │     ● Readwise
                         │
@@ -268,7 +268,7 @@ graph LR
                    Generic/Academic
 ```
 
-### 5.2 What Makes Vocabulary Vault Different
+### 5.2 What Makes ReadLoot Different
 
 | Feature | Anki | Quizlet | Vocabulary.com | Kindle VB | **Vocab Vault** |
 |---------|------|---------|----------------|-----------|-----------------|
@@ -284,9 +284,9 @@ graph LR
 ### 5.3 Positioning Statement
 
 > **For avid readers** who want to expand their vocabulary while reading,
-> **Vocabulary Vault** is a **reading companion** that organizes vocabulary by book and chapter with spoiler-free progressive unlock.
+> **ReadLoot** is a **reading companion** that organizes vocabulary by book and chapter with spoiler-free progressive unlock.
 > **Unlike** Anki (generic flashcards), Quizlet (academic study sets), or Kindle's Vocabulary Builder (device-locked, no community),
-> **Vocabulary Vault** combines book-centric organization, RPG gamification, community-curated word lists, and auto-extraction from any book format.
+> **ReadLoot** combines book-centric organization, RPG gamification, community-curated word lists, and auto-extraction from any book format.
 
 ### 5.4 Moats to Build
 
@@ -357,14 +357,14 @@ graph LR
 **Phase 3: Ecosystem (Months 6-12)**
 - Plugin marketplace (like Obsidian's community plugins)
 - Contributor badges and recognition in the app
-- Annual "Vocabulary Vault Community Awards"
+- Annual "ReadLoot Community Awards"
 - Bounty program for high-priority features
 
 ### 6.4 Contributor Funnel
 
 ```mermaid
 graph TD
-    A[User discovers Vocabulary Vault] --> B[Uses the app, loves it]
+    A[User discovers ReadLoot] --> B[Uses the app, loves it]
     B --> C[Creates a vocabulary list for a book]
     C --> D[Shares list with community]
     D --> E[Gets upvotes, feels ownership]
@@ -384,7 +384,7 @@ graph TD
 
 ### 7.1 Browser Extension
 
-**"Vocabulary Vault Reader"**
+**"ReadLoot Reader"**
 - Highlight any word on any webpage to add to your vocabulary
 - Auto-detect which book/article you're reading (if on Kindle Cloud Reader, Google Books, etc.)
 - Color-code words on the page: green = mastered, yellow = learning, red = new
@@ -405,7 +405,7 @@ graph TD
 
 **Approach 2: Kindle Cloud Reader Extension**
 - Browser extension that works on read.amazon.com
-- Intercepts word lookups and adds them to Vocabulary Vault
+- Intercepts word lookups and adds them to ReadLoot
 - Adds a "Save to Vault" button next to the dictionary popup
 
 **Priority: HIGH** - Kindle is the #1 ebook platform. Importing existing vocabulary is a killer onboarding feature.

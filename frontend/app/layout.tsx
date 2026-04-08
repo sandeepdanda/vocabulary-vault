@@ -10,7 +10,7 @@ import { GamificationOverlay } from "@/components/gamification/gamification-over
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Vocabulary Vault",
+  title: "ReadLoot",
   description: "A vocabulary RPG for readers",
   manifest: "/manifest.json",
   themeColor: "#7c3aed",

@@ -1,4 +1,4 @@
-# Vocabulary Vault - Project Reference
+# ReadLoot - Project Reference
 
 A vocabulary RPG that turns reading into a game. You read books, collect words you encounter, review them with spaced repetition, earn XP, level up, and unlock achievements.
 
@@ -164,7 +164,7 @@ All routes except auth require a valid JWT in the `access_token` httpOnly cookie
 **XP and Levels:**
 - Add word: +10 XP
 - Review (per correct answer in session): +5 XP
-- Levels: Novice (0) -> Page Turner (100) -> Bookworm (500) -> Word Smith (1500) -> Lexicon Lord (5000) -> Vocabulary Vault Master (15000)
+- Levels: Novice (0) -> Page Turner (100) -> Bookworm (500) -> Word Smith (1500) -> Lexicon Lord (5000) -> ReadLoot Master (15000)
 
 **Streaks:**
 - Consecutive daily activity tracked
