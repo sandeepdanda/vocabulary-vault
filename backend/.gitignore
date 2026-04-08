@@ -1,0 +1,9 @@
+# Backend data (user vaults, SQLite databases)
+data/
+
+# Environment
+.env
+
+# Python
+__pycache__/
+*.pyc

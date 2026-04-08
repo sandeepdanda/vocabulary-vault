@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: vocabulary-vault
+    runtime: python
+    buildCommand: |
+      pip install -r backend/requirements.txt
+      pip install -e .
+      cd frontend && npm install && npm run build
+      cp -r frontend/out backend/static
+    startCommand: cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALLOWED_ORIGINS
+        value: https://vocabulary-vault.onrender.com
+      - key: DATA_DIR
+        value: /opt/render/project/data
+    disk:
+      name: vault-data
+      mountPath: /opt/render/project/data
+      sizeGB: 1

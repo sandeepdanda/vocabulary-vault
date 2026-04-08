@@ -1,6 +1,3 @@
-# SQLite database
-vault.db
-
 # Python
 __pycache__/
 *.pyc
@@ -9,8 +6,6 @@ __pycache__/
 dist/
 build/
 .eggs/
-
-# Virtual environment
 .venv/
 env/
 
@@ -20,9 +15,35 @@ env/
 .coverage
 htmlcov/
 
+# Node
+node_modules/
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+
+# PWA generated service worker (regenerated on build)
+**/public/sw.js
+**/public/sw.js.map
+**/public/workbox-*.js
+**/public/workbox-*.js.map
+
+# SQLite databases
+*.db
+
+# Backend data (user vaults)
+backend/data/
+
+# Environment
+.env
+
 # IDE
 .vscode/
 .idea/
 
 # Kiro
 .kiro/
+
+# Archived prompts
+.META_PROMPT_ARCHIVE.md
