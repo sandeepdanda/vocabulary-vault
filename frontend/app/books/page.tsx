@@ -20,7 +20,18 @@ export default function BooksPage() {
       </div>
 
       {books.isLoading && (
-        <p className="text-muted-foreground">Loading books...</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="animate-pulse bg-muted rounded-lg h-28" />
+          ))}
+        </div>
+      )}
+
+      {books.isError && (
+        <div className="text-center py-12">
+          <p className="text-destructive mb-4">Failed to load books</p>
+          <button onClick={() => books.refetch()} className="text-primary underline">Try again</button>
+        </div>
       )}
 
       {books.data && books.data.length === 0 && (

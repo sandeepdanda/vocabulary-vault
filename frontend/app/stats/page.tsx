@@ -24,13 +24,39 @@ export default function StatsPage() {
     return (
       <div className="space-y-6">
         <h1 className="text-3xl font-bold">Stats</h1>
-        <p className="text-muted-foreground">Loading stats...</p>
+        <div className="animate-pulse bg-muted rounded-lg h-48" />
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div key={i} className="animate-pulse bg-muted rounded-lg h-28" />
+          ))}
+        </div>
       </div>
     );
   }
 
   const data = profile.data;
+  if (profile.isError) {
+    return (
+      <div className="space-y-6">
+        <h1 className="text-3xl font-bold">Stats</h1>
+        <div className="text-center py-12">
+          <p className="text-destructive mb-4">Failed to load stats</p>
+          <button onClick={() => profile.refetch()} className="text-primary underline">Try again</button>
+        </div>
+      </div>
+    );
+  }
   if (!data) return null;
+  if (data.total_xp === 0) {
+    return (
+      <div className="space-y-6">
+        <h1 className="text-3xl font-bold">Stats</h1>
+        <div className="text-center py-12">
+          <p className="text-muted-foreground">No stats yet. Add some words to get started!</p>
+        </div>
+      </div>
+    );
+  }
 
   const isMaxLevel = !data.next_level_threshold;
   const xpInLevel = data.total_xp - data.current_level_threshold;

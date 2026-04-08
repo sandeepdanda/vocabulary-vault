@@ -21,6 +21,14 @@ ALGORITHM = "HS256"
 COOKIE_NAME = "access_token"
 
 
+def _cookie_kwargs() -> dict:
+    """Return cookie settings appropriate for the environment."""
+    is_prod = settings.ALLOWED_ORIGINS != "http://localhost:3000"
+    if is_prod:
+        return {"httponly": True, "samesite": "none", "secure": True}
+    return {"httponly": True, "samesite": "lax"}
+
+
 def _get_users_db_path() -> str:
     return os.path.join(settings.DATA_DIR, "users.db")
 
@@ -111,9 +119,8 @@ def register(data: UserCreate, response: Response):
         response.set_cookie(
             key=COOKIE_NAME,
             value=token,
-            httponly=True,
-            samesite="lax",
             max_age=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
+            **_cookie_kwargs(),
         )
         return TokenResponse(message="Registration successful", username=data.username)
     finally:
@@ -139,9 +146,8 @@ def login(data: UserLogin, response: Response):
         response.set_cookie(
             key=COOKIE_NAME,
             value=token,
-            httponly=True,
-            samesite="lax",
             max_age=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
+            **_cookie_kwargs(),
         )
         return TokenResponse(message="Login successful", username=row["username"])
     finally:

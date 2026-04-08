@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, use } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,9 +10,11 @@ import * as api from "@/lib/api";
 export default function BookDetailPage({
   params,
 }: {
-  params: { name: string };
+  params: Promise<{ name: string }>;
 }) {
-  const bookName = decodeURIComponent(params.name);
+  const { name } = use(params);
+  const bookName = decodeURIComponent(name);
+  const [expandedChapter, setExpandedChapter] = useState<number | null>(null);
 
   const book = useQuery({
     queryKey: ["book", bookName],
@@ -42,13 +45,42 @@ export default function BookDetailPage({
         <p className="text-muted-foreground">Loading chapters...</p>
       )}
 
+      {book.isError && (
+        String(book.error?.message).includes("404") ? (
+          <div className="text-center py-12">
+            <p className="text-destructive mb-4">Book not found</p>
+            <Link href="/books" className="text-primary underline">Back to books</Link>
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-destructive mb-4">Failed to load book</p>
+            <button onClick={() => book.refetch()} className="text-primary underline">Try again</button>
+          </div>
+        )
+      )}
+
       {book.data && (
         <div className="space-y-3">
           {book.data.chapters.map((chapter) => (
-            <Card key={chapter.chapter_number}>
+            <Card
+              key={chapter.chapter_number}
+              className="cursor-pointer transition-colors hover:bg-muted/50"
+              onClick={() =>
+                setExpandedChapter(
+                  expandedChapter === chapter.chapter_number
+                    ? null
+                    : chapter.chapter_number,
+                )
+              }
+            >
               <CardHeader className="pb-2">
-                <CardTitle className="text-base">
-                  Chapter {chapter.chapter_number}: {chapter.name}
+                <CardTitle className="text-base flex items-center justify-between">
+                  <span>
+                    Chapter {chapter.chapter_number}: {chapter.name}
+                  </span>
+                  <span className="text-muted-foreground text-sm">
+                    {expandedChapter === chapter.chapter_number ? "▲" : "▼"}
+                  </span>
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -67,6 +99,18 @@ export default function BookDetailPage({
                     </span>
                   )}
                 </div>
+                {expandedChapter === chapter.chapter_number && (
+                  <div className="mt-4 pt-3 border-t text-sm space-y-2">
+                    <div className="grid grid-cols-2 gap-2 text-muted-foreground">
+                      <span>First entry:</span>
+                      <span>{chapter.earliest_entry || "—"}</span>
+                      <span>Latest entry:</span>
+                      <span>{chapter.latest_entry || "—"}</span>
+                      <span>Total words:</span>
+                      <span>{chapter.word_count}</span>
+                    </div>
+                  </div>
+                )}
               </CardContent>
             </Card>
           ))}

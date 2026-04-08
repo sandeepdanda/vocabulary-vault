@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   title: "ReadLoot",
   description: "A vocabulary RPG for readers",
   manifest: "/manifest.json",
+};
+
+export const viewport: Viewport = {
   themeColor: "#7c3aed",
 };
 

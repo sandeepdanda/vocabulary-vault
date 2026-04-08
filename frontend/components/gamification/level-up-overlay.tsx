@@ -14,6 +14,15 @@ export function LevelUpOverlay() {
     }
   }, [state.levelUp, dismissLevelUp]);
 
+  useEffect(() => {
+    if (!state.levelUp) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") dismissLevelUp();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [state.levelUp, dismissLevelUp]);
+
   if (!state.levelUp) return null;
 
   return (
@@ -22,6 +31,9 @@ export function LevelUpOverlay() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={dismissLevelUp}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Level up notification"
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 cursor-pointer"
     >
       <motion.div
@@ -40,7 +52,7 @@ export function LevelUpOverlay() {
         </p>
         <div className="text-4xl mt-2">🌟 🎉 🌟</div>
         <p className="text-xs text-muted-foreground mt-4">
-          Tap anywhere to dismiss
+          Tap anywhere or press Escape to dismiss
         </p>
       </motion.div>
     </motion.div>

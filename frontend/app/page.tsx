@@ -82,6 +82,15 @@ export default function DashboardPage() {
         </Card>
       )}
 
+      {/* Quick Stats Grid - Loading */}
+      {profile.isLoading && (
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div key={i} className="animate-pulse bg-muted rounded-lg h-32" />
+          ))}
+        </div>
+      )}
+
       {/* Quick Stats Grid */}
       {profile.data && (
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
@@ -161,6 +170,23 @@ export default function DashboardPage() {
       )}
 
       {wotd.isError && !isEmpty && (
+        <Card>
+          <CardContent className="py-8 text-center text-muted-foreground">
+            <span className="text-3xl block mb-2">✨</span>
+            <p>Could not load Word of the Day</p>
+            <Button
+              variant="outline"
+              size="sm"
+              className="mt-3"
+              onClick={() => wotd.refetch()}
+            >
+              Retry
+            </Button>
+          </CardContent>
+        </Card>
+      )}
+
+      {wotd.isError && isEmpty && (
         <Card>
           <CardContent className="py-8 text-center text-muted-foreground">
             <span className="text-3xl block mb-2">✨</span>

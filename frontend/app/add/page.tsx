@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -29,6 +29,21 @@ export default function AddWordPage() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [suggestion, setSuggestion] = useState<DictionaryResult | null>(null);
+
+  const { data: books } = useQuery({
+    queryKey: ["books"],
+    queryFn: api.getBooks,
+  });
+
+  const matchedBook = books?.find(
+    (b) => b.name.toLowerCase() === bookName.trim().toLowerCase(),
+  );
+
+  const { data: bookDetails } = useQuery({
+    queryKey: ["bookDetails", matchedBook?.name],
+    queryFn: () => api.getBookDetails(matchedBook!.name),
+    enabled: !!matchedBook,
+  });
 
   // Debounced dictionary lookup
   useEffect(() => {
@@ -135,6 +150,7 @@ export default function AddWordPage() {
                 placeholder="e.g. ephemeral"
                 value={word}
                 onChange={(e) => setWord(e.target.value)}
+                maxLength={100}
                 required
               />
             </div>
@@ -173,8 +189,10 @@ export default function AddWordPage() {
                 placeholder="Definition of the word"
                 value={meaning}
                 onChange={(e) => setMeaning(e.target.value)}
+                maxLength={500}
                 required
               />
+              <p className="text-muted-foreground text-xs">{meaning.length}/500</p>
             </div>
 
             <div className="space-y-2">
@@ -186,6 +204,7 @@ export default function AddWordPage() {
                 placeholder="e.g. fleeting, transient, brief"
                 value={synonyms}
                 onChange={(e) => setSynonyms(e.target.value)}
+                maxLength={200}
               />
             </div>
 
@@ -198,7 +217,9 @@ export default function AddWordPage() {
                 placeholder="A sentence using the word in context"
                 value={context}
                 onChange={(e) => setContext(e.target.value)}
+                maxLength={500}
               />
+              <p className="text-muted-foreground text-xs">{context.length}/500</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -211,8 +232,14 @@ export default function AddWordPage() {
                   placeholder="e.g. Sapiens"
                   value={bookName}
                   onChange={(e) => setBookName(e.target.value)}
+                  list="bookName-options"
                   required
                 />
+                <datalist id="bookName-options">
+                  {books?.map((b) => (
+                    <option key={b.name} value={b.name} />
+                  ))}
+                </datalist>
               </div>
               <div className="space-y-2">
                 <label htmlFor="chapterName" className="text-sm font-medium">
@@ -223,8 +250,14 @@ export default function AddWordPage() {
                   placeholder="e.g. The Cognitive Revolution"
                   value={chapterName}
                   onChange={(e) => setChapterName(e.target.value)}
+                  list="chapterName-options"
                   required
                 />
+                <datalist id="chapterName-options">
+                  {bookDetails?.chapters?.map((c) => (
+                    <option key={c.name} value={c.name} />
+                  ))}
+                </datalist>
               </div>
             </div>
 
@@ -235,7 +268,7 @@ export default function AddWordPage() {
             )}
 
             {success && (
-              <p className="text-sm text-accent bg-accent/10 rounded-md px-3 py-2">
+              <p className="text-sm text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-950/30 rounded-md px-3 py-2">
                 ✅ {success}
               </p>
             )}

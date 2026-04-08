@@ -20,10 +20,26 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [usernameError, setUsernameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  function validate() {
+    let valid = true;
+    if (username.length < 3) {
+      setUsernameError("Username must be at least 3 characters");
+      valid = false;
+    }
+    if (password.length < 6) {
+      setPasswordError("Password must be at least 6 characters");
+      valid = false;
+    }
+    return valid;
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
+    if (!validate()) return;
     setLoading(true);
 
     try {
@@ -62,6 +78,8 @@ export default function LoginPage() {
               onClick={() => {
                 setIsLogin(true);
                 setError("");
+                setUsernameError("");
+                setPasswordError("");
               }}
               className={`flex-1 py-2 text-sm font-medium rounded-md transition-colors ${
                 isLogin
@@ -76,6 +94,8 @@ export default function LoginPage() {
               onClick={() => {
                 setIsLogin(false);
                 setError("");
+                setUsernameError("");
+                setPasswordError("");
               }}
               className={`flex-1 py-2 text-sm font-medium rounded-md transition-colors ${
                 !isLogin
@@ -100,10 +120,20 @@ export default function LoginPage() {
                 type="text"
                 placeholder="Enter your username"
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                  setUsernameError("");
+                }}
+                onBlur={() => {
+                  if (username.length > 0 && username.length < 3)
+                    setUsernameError("Username must be at least 3 characters");
+                }}
                 required
                 autoComplete="username"
               />
+              {usernameError && (
+                <p className="text-sm text-destructive">{usernameError}</p>
+              )}
             </div>
             <div className="space-y-2">
               <label
@@ -117,10 +147,25 @@ export default function LoginPage() {
                 type="password"
                 placeholder="Enter your password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setPasswordError("");
+                }}
+                onBlur={() => {
+                  if (password.length > 0 && password.length < 6)
+                    setPasswordError("Password must be at least 6 characters");
+                }}
                 required
                 autoComplete={isLogin ? "current-password" : "new-password"}
               />
+              {passwordError && (
+                <p className="text-sm text-destructive">{passwordError}</p>
+              )}
+              {!isLogin && !passwordError && (
+                <p className="text-sm text-muted-foreground">
+                  Password must be at least 6 characters
+                </p>
+              )}
             </div>
 
             {error && (

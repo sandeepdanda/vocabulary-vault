@@ -14,7 +14,23 @@ export default function AchievementsPage() {
     return (
       <div className="space-y-6">
         <h1 className="text-3xl font-bold">Achievements</h1>
-        <p className="text-muted-foreground">Loading achievements...</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="animate-pulse bg-muted rounded-lg h-24" />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (achievements.isError) {
+    return (
+      <div className="space-y-6">
+        <h1 className="text-3xl font-bold">Achievements</h1>
+        <div className="text-center py-12">
+          <p className="text-destructive mb-4">Failed to load achievements</p>
+          <button onClick={() => achievements.refetch()} className="text-primary underline">Try again</button>
+        </div>
       </div>
     );
   }

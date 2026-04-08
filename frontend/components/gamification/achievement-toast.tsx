@@ -25,6 +25,8 @@ export function AchievementToast() {
       exit={{ x: 300, opacity: 0 }}
       transition={{ type: "spring", damping: 20, stiffness: 200 }}
       className="fixed top-4 right-4 z-50 max-w-sm"
+      role="status"
+      aria-live="polite"
     >
       <div
         className="bg-card border border-border rounded-xl p-4 shadow-lg flex items-start gap-3 cursor-pointer"

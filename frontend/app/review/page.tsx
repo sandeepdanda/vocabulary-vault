@@ -29,6 +29,8 @@ export default function ReviewPage() {
   const [correctCount, setCorrectCount] = useState(0);
   const [masteredWords, setMasteredWords] = useState<string[]>([]);
   const [summary, setSummary] = useState<ReviewSessionSummary | null>(null);
+  const [answerError, setAnswerError] = useState(false);
+  const [completeError, setCompleteError] = useState(false);
 
   const dueQuery = useQuery({
     queryKey: ["dueWordsReview"],
@@ -51,6 +53,7 @@ export default function ReviewPage() {
     mutationFn: ({ wordId, answer }: { wordId: number; answer: string }) =>
       api.submitAnswer(wordId, answer),
     onSuccess: (data) => {
+      setAnswerError(false);
       setFeedback(data);
       if (data.correct) {
         setCorrectCount((c) => c + 1);
@@ -60,11 +63,15 @@ export default function ReviewPage() {
       }
       setReviewState("feedback");
     },
+    onError: () => {
+      setAnswerError(true);
+    },
   });
 
   const completeMutation = useMutation({
     mutationFn: () => api.completeReview(correctCount, words.length),
     onSuccess: (data) => {
+      setCompleteError(false);
       setSummary(data);
       setReviewState("summary");
 
@@ -77,6 +84,9 @@ export default function ReviewPage() {
 
       queryClient.invalidateQueries({ queryKey: ["profile"] });
       queryClient.invalidateQueries({ queryKey: ["dueWords"] });
+    },
+    onError: () => {
+      setCompleteError(true);
     },
   });
 
@@ -114,6 +124,11 @@ export default function ReviewPage() {
     [currentWord, answer, answerMutation],
   );
 
+  const handleSkip = useCallback(() => {
+    if (!currentWord) return;
+    answerMutation.mutate({ wordId: currentWord.id, answer: "" });
+  }, [currentWord, answerMutation]);
+
   const handleNext = useCallback(() => {
     const nextIndex = currentIndex + 1;
     if (nextIndex >= words.length) {
@@ -127,15 +142,21 @@ export default function ReviewPage() {
     }
   }, [currentIndex, words.length, completeMutation]);
 
+  useEffect(() => {
+    if (reviewState !== "feedback") return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Enter") handleNext();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [reviewState, handleNext]);
+
   if (reviewState === "loading" || dueQuery.isLoading) {
     return (
       <div className="space-y-6">
         <h1 className="text-3xl font-bold">Review</h1>
-        <Card>
-          <CardContent className="py-12 text-center text-muted-foreground">
-            Loading due words...
-          </CardContent>
-        </Card>
+        <div className="animate-pulse bg-muted rounded-lg h-8 w-full" />
+        <div className="animate-pulse bg-muted rounded-lg h-56" />
       </div>
     );
   }
@@ -236,6 +257,37 @@ export default function ReviewPage() {
   // Reviewing or feedback state
   const prompt = currentWord ? getPrompt(currentWord) : null;
 
+  if (completeError) {
+    return (
+      <div className="space-y-6">
+        <h1 className="text-3xl font-bold">Review Complete!</h1>
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-center">Session Summary</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="text-center">
+              <p className="text-4xl font-bold">
+                {correctCount}/{words.length}
+              </p>
+              <p className="text-muted-foreground mt-1">correct answers</p>
+            </div>
+            <p className="text-sm text-destructive text-center">
+              Could not save your session to the server.
+            </p>
+            <Button
+              onClick={() => completeMutation.mutate()}
+              disabled={completeMutation.isPending}
+              className="w-full"
+            >
+              Retry
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -271,20 +323,41 @@ export default function ReviewPage() {
             </p>
 
             {reviewState === "reviewing" && (
-              <form onSubmit={handleSubmitAnswer} className="flex gap-2">
-                <Input
-                  placeholder="Type your answer..."
-                  value={answer}
-                  onChange={(e) => setAnswer(e.target.value)}
-                  autoFocus
-                  disabled={answerMutation.isPending}
-                />
-                <Button
-                  type="submit"
-                  disabled={!answer.trim() || answerMutation.isPending}
-                >
-                  Submit
-                </Button>
+              <form onSubmit={handleSubmitAnswer} className="space-y-2">
+                <div className="flex gap-2">
+                  <Input
+                    placeholder="Type your answer..."
+                    value={answer}
+                    onChange={(e) => setAnswer(e.target.value)}
+                    autoFocus
+                    disabled={answerMutation.isPending}
+                  />
+                  <Button
+                    type="submit"
+                    disabled={!answer.trim() || answerMutation.isPending}
+                  >
+                    Submit
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    onClick={handleSkip}
+                    disabled={answerMutation.isPending}
+                  >
+                    I don&apos;t know
+                  </Button>
+                </div>
+                {answerError && (
+                  <p className="text-sm text-destructive">
+                    Failed to submit answer.{" "}
+                    <button
+                      type="submit"
+                      className="underline hover:no-underline"
+                    >
+                      Retry
+                    </button>
+                  </p>
+                )}
               </form>
             )}
 

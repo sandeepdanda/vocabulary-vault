@@ -47,3 +47,4 @@ backend/data/
 
 # Archived prompts
 .META_PROMPT_ARCHIVE.md
+frontend/tsconfig.tsbuildinfo

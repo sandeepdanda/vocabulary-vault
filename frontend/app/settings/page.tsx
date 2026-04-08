@@ -14,6 +14,7 @@ export default function SettingsPage() {
   const [username, setUsername] = useState("");
   const [loggingOut, setLoggingOut] = useState(false);
   const [exporting, setExporting] = useState(false);
+  const [exportError, setExportError] = useState("");
 
   useEffect(() => {
     setMounted(true);
@@ -40,6 +41,7 @@ export default function SettingsPage() {
 
   const handleExport = useCallback(async () => {
     setExporting(true);
+    setExportError("");
     try {
       const data = await api.exportVault();
       const blob = new Blob([JSON.stringify(data, null, 2)], {
@@ -54,7 +56,7 @@ export default function SettingsPage() {
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     } catch {
-      // silently fail
+      setExportError("Failed to export vault. Please try again.");
     } finally {
       setExporting(false);
     }
@@ -102,33 +104,29 @@ export default function SettingsPage() {
             <div>
               <p className="text-sm font-medium">Theme</p>
               <p className="text-sm text-muted-foreground">
-                Switch between dark and light mode
+                Choose your preferred appearance
               </p>
             </div>
             {mounted && (
-              <div className="flex rounded-lg bg-muted p-1">
-                <button
-                  type="button"
-                  onClick={() => setTheme("light")}
-                  className={`px-3 py-1.5 text-sm rounded-md transition-colors ${
-                    theme === "light"
-                      ? "bg-background text-foreground shadow-sm"
-                      : "text-muted-foreground"
-                  }`}
-                >
-                  ☀️ Light
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setTheme("dark")}
-                  className={`px-3 py-1.5 text-sm rounded-md transition-colors ${
-                    theme === "dark"
-                      ? "bg-background text-foreground shadow-sm"
-                      : "text-muted-foreground"
-                  }`}
-                >
-                  🌙 Dark
-                </button>
+              <div className="flex rounded-lg p-1 gap-1">
+                {([
+                  { value: "light", label: "☀️ Light" },
+                  { value: "dark", label: "🌙 Dark" },
+                  { value: "system", label: "🖥️ System" },
+                ] as const).map((option) => (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => setTheme(option.value)}
+                    className={`px-3 py-1.5 text-sm rounded-md transition-colors ${
+                      theme === option.value
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-muted text-muted-foreground"
+                    }`}
+                  >
+                    {option.label}
+                  </button>
+                ))}
               </div>
             )}
           </div>
@@ -156,6 +154,9 @@ export default function SettingsPage() {
               {exporting ? "Exporting..." : "Export"}
             </Button>
           </div>
+          {exportError && (
+            <p className="text-sm text-destructive mt-2">{exportError}</p>
+          )}
         </CardContent>
       </Card>
     </div>

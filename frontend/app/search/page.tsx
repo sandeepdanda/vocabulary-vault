@@ -2,38 +2,46 @@
 
 import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import * as api from "@/lib/api";
 import type { WordResponse } from "@/lib/types";
+
+const PAGE_SIZE = 20;
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<WordResponse[]>([]);
   const [searched, setSearched] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [displayCount, setDisplayCount] = useState(PAGE_SIZE);
+
+  const doSearch = async (searchQuery: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await api.searchWords(searchQuery);
+      setResults(data);
+      setSearched(true);
+      setDisplayCount(PAGE_SIZE);
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (!query.trim()) {
       setResults([]);
       setSearched(false);
+      setError(null);
       return;
     }
 
-    const timer = setTimeout(async () => {
-      setLoading(true);
-      try {
-        const data = await api.searchWords(query.trim());
-        setResults(data);
-        setSearched(true);
-      } catch {
-        setResults([]);
-        setSearched(true);
-      } finally {
-        setLoading(false);
-      }
-    }, 300);
-
+    const timer = setTimeout(() => doSearch(query.trim()), 300);
     return () => clearTimeout(timer);
   }, [query]);
 
@@ -54,7 +62,13 @@ export default function SearchPage() {
         autoFocus
       />
 
-      {loading && <p className="text-sm text-muted-foreground">Searching...</p>}
+      {loading && (
+        <div className="space-y-3">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="animate-pulse bg-muted rounded-lg h-28" />
+          ))}
+        </div>
+      )}
 
       {!query.trim() && !searched && (
         <Card>
@@ -67,7 +81,19 @@ export default function SearchPage() {
         </Card>
       )}
 
-      {searched && results.length === 0 && (
+      {error && (
+        <Card>
+          <CardContent className="flex flex-col items-center py-12">
+            <span className="text-5xl mb-4">⚠️</span>
+            <p className="text-muted-foreground mb-4">{error}</p>
+            <Button variant="outline" onClick={() => doSearch(query.trim())}>
+              Retry
+            </Button>
+          </CardContent>
+        </Card>
+      )}
+
+      {searched && !error && results.length === 0 && (
         <Card>
           <CardContent className="flex flex-col items-center py-12">
             <span className="text-5xl mb-4">🤷</span>
@@ -81,9 +107,9 @@ export default function SearchPage() {
       {results.length > 0 && (
         <div className="space-y-3">
           <p className="text-sm text-muted-foreground">
-            {results.length} result{results.length !== 1 ? "s" : ""}
+            Showing {Math.min(displayCount, results.length)} of {results.length} result{results.length !== 1 ? "s" : ""}
           </p>
-          {results.map((word) => (
+          {results.slice(0, displayCount).map((word) => (
             <Card key={`${word.id}-${word.book_name}`}>
               <CardHeader className="pb-2">
                 <div className="flex items-center justify-between">
@@ -108,6 +134,15 @@ export default function SearchPage() {
               </CardContent>
             </Card>
           ))}
+          {displayCount < results.length && (
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={() => setDisplayCount((c) => c + PAGE_SIZE)}
+            >
+              Show more
+            </Button>
+          )}
         </div>
       )}
     </div>
